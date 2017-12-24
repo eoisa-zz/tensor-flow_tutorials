@@ -14,7 +14,7 @@ print(sess.run(node_3))
 a = tf.placeholder(tf.float32)
 b = tf.placeholder(tf.float32)
 
-add_node = a + b    #  the '+' is an overload of td.add(a, b)
+add_node = a + b    #  the '+' is an overload of tf.add(a, b)
 
 print(sess.run(add_node, {a: 3, b: 4.5}))
 print(sess.run(add_node, {a: [1, 3], b: [2, 4]}))
