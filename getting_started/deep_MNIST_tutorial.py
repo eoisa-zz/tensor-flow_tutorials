@@ -14,6 +14,9 @@ def main(_):
     #   x will be used to funnel the mnist dataset into the neural network
     x = tf.placeholder(dtype=tf.float32, shape=[None, 784])
 
+    # y_ is actually y' and is the true distribution
+    y_ = tf.placeholder(dtype=tf.float64, shape=[None, 10])
+
     #   setup the first convolutional layer
     W_conv1 = weight_variable([5, 5, 1, 32])
     b_conv1 = bias_variable([32])
@@ -59,11 +62,11 @@ def main(_):
             if i % 100 == 0:
                 train_accuracy = accuracy.eval(feed_dict={
                     x: batch[0], y_: batch[1], keep_prob: 1.0})
-                print('step %d, training accuracy %g' % (i, train_accuracy))
+                print('step {}, training accuracy {}%'.format(i, round(train_accuracy * 100, 2)))
             train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
 
-        print('test accuracy %g' % accuracy.eval(feed_dict={
-            x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
+        final_accuracy = accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0})
+        print('final test accuracy {}%'.format(round(final_accuracy * 100, 2)))
 
 
 def weight_variable(shape):
